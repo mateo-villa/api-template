@@ -1,5 +1,6 @@
 import { fromHono } from "chanfana";
 import { Hono } from "hono";
+import { cors } from "hono/cors";
 import { TaskCreate } from "./endpoints/taskCreate";
 import { TaskDelete } from "./endpoints/taskDelete";
 import { TaskFetch } from "./endpoints/taskFetch";
@@ -9,6 +10,7 @@ import { DogCreate } from "./endpoints/dogCreate";
 
 // Start a Hono app
 const app = new Hono();
+app.use("/api/v1/dog", cors());
 
 // Setup OpenAPI registry
 const openapi = fromHono(app, {
