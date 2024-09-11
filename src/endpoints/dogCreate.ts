@@ -17,7 +17,7 @@ export class DogCreate extends OpenAPIRoute {
     },
     responses: {
       "200": {
-        description: "Returns the created task",
+        description: "Returns the created Dog",
         content: {
           "application/json": {
             schema: z.object({

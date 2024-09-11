@@ -1,14 +1,18 @@
 import { fromHono } from "chanfana";
 import { Hono } from "hono";
+import { cors } from "hono/cors";
 import { TaskCreate } from "./endpoints/taskCreate";
 import { TaskDelete } from "./endpoints/taskDelete";
 import { TaskFetch } from "./endpoints/taskFetch";
 import { TaskList } from "./endpoints/taskList";
 
 import { DogCreate } from "./endpoints/dogCreate";
+import { DogFetch } from "./endpoints/dogFetch";
+import { DogList } from "./endpoints/dogList";
 
 // Start a Hono app
 const app = new Hono();
+app.use("/api/v1/dog", cors());
 
 // Setup OpenAPI registry
 const openapi = fromHono(app, {
@@ -22,6 +26,8 @@ openapi.get("/api/tasks/:taskSlug", TaskFetch);
 openapi.delete("/api/tasks/:taskSlug", TaskDelete);
 
 openapi.post("/api/v1/dog", DogCreate);
+openapi.get("/api/v1/dog/:dogSlug", DogFetch);
+openapi.get("/api/v1/dog", DogList);
 
 // Export the Hono app
 export default app;
