@@ -56,7 +56,8 @@ export class DogDelete extends OpenAPIRoute {
     if (dogs.dogList.length - 1 < dogSlug) {
       return Response.json({ success: false, error: "Dog not found" });
     }
-    const deletedDog = dogs.dogList.pop(dogSlug);
+    //const deletedDog = dogs.dogList.pop(dogSlug);
+    const deletedDog = dogs.dogList.splice(dogSlug, 1);
 
     // Return the deleted task for confirmation
     return {
