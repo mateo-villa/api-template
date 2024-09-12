@@ -1,4 +1,4 @@
-import { Bool, OpenAPIRoute, Num } from "chanfana";
+import { Bool, OpenAPIRoute, Num, Str } from "chanfana";
 import { z } from "zod";
 import { Dog } from "../types";
 
@@ -29,6 +29,19 @@ export class DogDelete extends OpenAPIRoute {
           },
         },
       },
+      "404": {
+        description: "Returns if no matching Dog was found",
+        content: {
+          "application/json": {
+            schema: z.object({
+              series: z.object({
+                success: Bool(),
+                error: Str(),
+              }),
+            }),
+          },
+        },
+      },
     },
   };
 
@@ -40,6 +53,9 @@ export class DogDelete extends OpenAPIRoute {
     const { dogSlug } = data.params;
 
     // Implement your own object deletion here
+    if (dogs.dogList.length - 1 < dogSlug) {
+      return Response.json({ success: false, error: "Dog not found" });
+    }
     const deletedDog = dogs.dogList.pop(dogSlug);
 
     // Return the deleted task for confirmation
