@@ -2,6 +2,8 @@ import { Bool, OpenAPIRoute } from "chanfana";
 import { z } from "zod";
 import { Dog } from "../types";
 
+const dogs = require("../dogStorage");
+
 export class DogCreate extends OpenAPIRoute {
   schema = {
     tags: ["Dog"],
@@ -42,6 +44,7 @@ export class DogCreate extends OpenAPIRoute {
     const dogToCreate = data.body;
 
     // Implement your own object insertion here
+    dogs.dogList.push(dogToCreate);
 
     // return the new task
     return {
