@@ -10,9 +10,9 @@ import { DogDelete } from "./endpoints/dogDelete";
 
 // Start a Hono app
 const app = new Hono();
-app.use("/api/v1/dog", cors());
+app.use("/api/v1/dogs", cors());
 app.use(
-  "/api/v1/rename",
+  "/api/v1/dogs",
   basicAuth({
     verifyUser: (username, password, c) => {
       return (
@@ -30,9 +30,11 @@ const openapi = fromHono(app, {
 
 // Register OpenAPI endpoints
 openapi.post("/api/v1/dog", DogCreate);
-openapi.get("/api/v1/dog", DogList);
 openapi.get("/api/v1/dog/:dogSlug", DogFetch);
 openapi.delete("/api/v1/dog/:dogSlug", DogDelete);
+
+// Requires admin privileges
+openapi.get("/api/v1/dogs", DogList);
 
 // Export the Hono app
 export default app;
