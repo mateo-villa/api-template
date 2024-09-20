@@ -10,7 +10,7 @@ import { DogDelete } from "./endpoints/dogDelete";
 
 // Start a Hono app
 const app = new Hono();
-app.use("/api/v1/dogs", cors());
+app.use("/api/v1/*", cors());
 app.use(
   "/api/v1/dogs",
   basicAuth({
