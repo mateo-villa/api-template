@@ -6,17 +6,13 @@ const dogList = require("../dogStorage");
 
 export class DogList extends OpenAPIRoute {
   schema = {
-    tags: ["Dog"],
+    tags: ["Admin"],
     summary: "List all Dogs",
     request: {
       query: z.object({
         page: Num({
           description: "Page number",
           default: 0,
-        }),
-        isCompleted: Bool({
-          description: "Filter by completed flag",
-          required: false,
         }),
       }),
     },
@@ -44,7 +40,7 @@ export class DogList extends OpenAPIRoute {
     const data = await this.getValidatedData<typeof this.schema>();
 
     // Retrieve the validated parameters
-    const { page, isCompleted } = data.query;
+    const { page } = data.query;
 
     // Implement your own object list here
 
