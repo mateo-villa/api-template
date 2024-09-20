@@ -1,5 +1,6 @@
 import { fromHono } from "chanfana";
 import { Hono } from "hono";
+import { basicAuth } from "hono/basic-auth";
 import { cors } from "hono/cors";
 
 import { DogCreate } from "./endpoints/dogCreate";
@@ -10,6 +11,17 @@ import { DogDelete } from "./endpoints/dogDelete";
 // Start a Hono app
 const app = new Hono();
 app.use("/api/v1/dog", cors());
+app.use(
+  "/api/v1/rename",
+  basicAuth({
+    verifyUser: (username, password, c) => {
+      return (
+        username === `${c.env.ADMIN_USERNAME}` &&
+        password === `${c.env.ADMIN_PASSWORD}`
+      );
+    },
+  })
+);
 
 // Setup OpenAPI registry
 const openapi = fromHono(app, {
